@@ -17,4 +17,7 @@ const crearDeck = () => {
         }
     }
     console.log(deck);
+    //shuffle es una función de la libreria underscore.js que sirve para barajear las cartas, porque si no, siempre apareceran en orden
+    deck = _.shuffle(deck);
+    console.log(deck);
 }
