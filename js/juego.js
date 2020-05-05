@@ -16,6 +16,7 @@ let puntosComputadora = 0;
 
 //Referencias del html
 const btnPedir = document.querySelector('#btnPedir');
+const divCartasJugador = document.querySelector('#jugador-cartas');
 const puntosHtml = document.querySelectorAll('small');
 
 
@@ -102,6 +103,20 @@ btnPedir.addEventListener('click', () => {
     puntosJugador = puntosJugador + valorCarta(carta);
     //Le puse 0 porque hay dos etiquetas html small
     puntosHtml[0].innerText = puntosJugador;
-})
+    //Debo de crear esto: <img class="carta" src="assets/cartas/2H.png" alt="">
+    const imgCarta = document.createElement('img');
+    //Aquí le agrego la dirección de la url donde está mi carta
+    imgCarta.src = `assets/cartas/${carta}.png`;
+    //Aquí agrego la clase que modifica la imagen
+    imgCarta.classList.add('carta');
 
-//CallBack:Una función que se coloca como argumento a otra función
+    //Aquí agrego la dirección de donde quiero que aparezca
+    divCartasJugador.append(imgCarta);
+
+    if (puntosJugador > 21) {
+        console.warn('Lo siento, has perdido');
+        btnPedir.disabled = true;
+    } else if (puntosJugador === 21) {
+        console.warn('21, genial!');
+    }
+})
