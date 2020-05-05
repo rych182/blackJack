@@ -1,7 +1,25 @@
+/*
+C = Clubs(treboles)
+D = Diamonds
+H = Hearts
+S = Spades
+*/
+
 let deck = [];
 const tipos = ['C', 'D', 'H', 'S']; //corazones, diamantes, espadas, treboles
 const especiales = ['A', 'J', 'Q', 'K'];
+//Estas vasriables las usaré para saber cuantos puntos se van sumando
+let puntosJugador = 0;
+let puntosComputadora = 0;
 
+
+
+//Referencias del html
+const btnPedir = document.querySelector('#btnPedir');
+const puntosHtml = document.querySelectorAll('small');
+
+
+//Función que crea un nuevo Deck
 const crearDeck = () => {
     //Las cartas empiezan en 2
     for (let i = 2; i <= 10; i++) {
@@ -25,18 +43,19 @@ crearDeck();
 
 //Esta función me permite tomar una carta del deck y descontarla del deck
 const pedirCarta = () => {
-
         if (deck.length === 0) {
             throw "No hay cartas en el deck"; // throw muestra un error en consola
         }
 
         const carta = deck.pop();
 
-        console.log(deck);
-        console.log(carta);
         return carta;
     }
     /*
+    Usa estos console.log para verificar los datos que regresan, ponlos antes del return
+    console.log(deck);
+    console.log(carta);
+
     Verifica que vaya descontando una carta hasta que te quedes sin cartas
     for (let i = 0; i < 60; i++) {
         pedirCarta();
@@ -59,9 +78,8 @@ const valorCarta = (carta) => {
     console.log(puntos);
 }
 valorCarta('9D');
-*/
-//Codigo más elegante de la función "Valor carta", que usa el valor de la carta usando la función pedirCarta()
 
+//Codigo más elegante de la función "Valor carta", que usa el valor de la carta usando la función pedirCarta()
 const valorCarta = (carta) => {
     const valor = carta.substring(0, carta.length - 1);
     return (isNaN(valor)) ?
@@ -70,3 +88,20 @@ const valorCarta = (carta) => {
 }
 const valor = valorCarta(pedirCarta());
 console.log({ valor });
+*/
+const valorCarta = (carta) => {
+    const valor = carta.substring(0, carta.length - 1);
+    return (isNaN(valor)) ?
+        (valor === 'A') ? 11 : 10 :
+        valor * 1;
+}
+
+//Eventos
+btnPedir.addEventListener('click', () => {
+    const carta = pedirCarta();
+    puntosJugador = puntosJugador + valorCarta(carta);
+    //Le puse 0 porque hay dos etiquetas html small
+    puntosHtml[0].innerText = puntosJugador;
+})
+
+//CallBack:Una función que se coloca como argumento a otra función
