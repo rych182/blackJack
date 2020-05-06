@@ -16,7 +16,9 @@ let puntosComputadora = 0;
 
 //Referencias del html
 const btnPedir = document.querySelector('#btnPedir');
+const btnDetener = document.querySelector('#btnDetener');
 const divCartasJugador = document.querySelector('#jugador-cartas');
+const divCartasComputadora = document.querySelector('#computadora-cartas');
 const puntosHtml = document.querySelectorAll('small');
 
 
@@ -97,6 +99,32 @@ const valorCarta = (carta) => {
         valor * 1;
 }
 
+//Turno de la computadora, cuando el jugador pierde, alcance los 21 ó presione el boton detener
+const turnoComputadora = (puntosMinimos) => {
+    do {
+        const carta = pedirCarta();
+
+        puntosComputadora = puntosComputadora + valorCarta(carta);
+        //[1] porque es el segundo small
+        puntosHtml[1].innerText = puntosComputadora;
+
+        //Debo de crear esto: <img class="carta" src="assets/cartas/2H.png" alt="">
+        const imgCarta = document.createElement('img');
+        //Aquí le agrego la dirección de la url donde está mi carta
+        imgCarta.src = `assets/cartas/${carta}.png`;
+        //Aquí agrego la clase que modifica la imagen
+        imgCarta.classList.add('carta');
+        //Aquí agrego donde quiero que aparezca
+        divCartasComputadora.append(imgCarta);
+
+        if (puntosMinimos > 21) {
+            break;
+        }
+
+    } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
+}
+
+
 //Eventos
 btnPedir.addEventListener('click', () => {
     const carta = pedirCarta();
@@ -110,13 +138,26 @@ btnPedir.addEventListener('click', () => {
     //Aquí agrego la clase que modifica la imagen
     imgCarta.classList.add('carta');
 
-    //Aquí agrego la dirección de donde quiero que aparezca
+    //Aquí agrego donde quiero que aparezca
     divCartasJugador.append(imgCarta);
 
     if (puntosJugador > 21) {
         console.warn('Lo siento, has perdido');
         btnPedir.disabled = true;
+        //cuando supere los 21 
+        turnoComputadora(puntosJugador);
     } else if (puntosJugador === 21) {
         console.warn('21, genial!');
+        btnPedir.disabled = true;
+        //cuando supere los 21 
+        turnoComputadora(puntosJugador);
     }
-})
+});
+
+btnDetener.addEventListener('click', () => {
+    //Necesito detener estos 2 botones
+    btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    //llamo al turno de la computadora, donde
+    turnoComputadora(puntosJugador);
+});
