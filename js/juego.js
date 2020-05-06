@@ -15,6 +15,7 @@ let puntosComputadora = 0;
 
 
 //Referencias del html
+const btnNuevo = document.querySelector('#btnNuevo');
 const btnPedir = document.querySelector('#btnPedir');
 const btnDetener = document.querySelector('#btnDetener');
 const divCartasJugador = document.querySelector('#jugador-cartas');
@@ -122,7 +123,21 @@ const turnoComputadora = (puntosMinimos) => {
         }
 
     } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
+
+    setTimeout(() => { //Lo uso para que aparezcan primero las cartas de la computadora antes que el alert
+
+        if (puntosComputadora === puntosMinimos) {
+            alert('Nadie gana =/');
+        } else if (puntosMinimos > 21) {
+            alert("La computadora gana");
+        } else if (puntosComputadora > 21) {
+            alert('JUgador Gana!!');
+        } else {
+            alert("COmputadora Gana!");
+        }
+    }, 10);
 }
+
 
 
 //Eventos
@@ -149,6 +164,7 @@ btnPedir.addEventListener('click', () => {
     } else if (puntosJugador === 21) {
         console.warn('21, genial!');
         btnPedir.disabled = true;
+        btnDetener.disabled = true;
         //cuando supere los 21 
         turnoComputadora(puntosJugador);
     }
@@ -161,3 +177,21 @@ btnDetener.addEventListener('click', () => {
     //llamo al turno de la computadora, donde
     turnoComputadora(puntosJugador);
 });
+
+btnNuevo.addEventListener('click', () => {
+
+    //console.clear es para limpiar la consola
+    console.clear();
+    deck = [];
+    deck = crearDeck();
+
+    puntosJugador = 0;
+    puntosComputadora = 0;
+    puntosHtml[0].innerText = 0;
+    puntosHtml[1].innerText = 0;
+    divCartasComputadora.innerHTML = '';
+    divCartasJugador.innerHTML = '';
+    btnPedir.disabled = false;
+    btnDetener.disabled = false;
+
+})
