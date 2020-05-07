@@ -16,8 +16,8 @@
     <div class="row mt-2">
         <div class="col text-center" id="divBotones">
             <button class="btn btn-danger" id="btnNuevo">Nuevo juego</button>
-            <button class="btn btn-primary" id="btnPedir">Pedir carta</button>
-            <button class="btn btn-primary" id="btnDetener">Detener</button>
+            <button class="btn btn-primary" disabled="disabled" id="btnPedir">Pedir carta</button>
+            <button class="btn btn-primary" disabled="disabled" id="btnDetener">Detener</button>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
                 Jugador 1 -
                 <small>0</small>
             </h1>
-            <div id="jugador-cartas">
+            <div id="jugador-cartas" class="divCartas">
                 <!--Lo comente porque cuando el juego inicia el jugador no debe de tener cartas
                     <img class="carta" src="assets/cartas/2H.png" alt=""> -->
             </div>
@@ -40,7 +40,7 @@
                 Computadora -
                 <small>0</small>
             </h1>
-            <div id="computadora-cartas">
+            <div id="computadora-cartas" class="divCartas">
 
                 <!-- <img class="carta" src="assets/cartas/2C.png" alt=""> -->
             </div>
